@@ -17,7 +17,7 @@ The repository is organized into three main folders:
 
 ```text
 2520030366_DSA-03/
-├── 📂 Practical/       # Lab exercises, experiment implementations, and practical assignments
+├── 📂 Practical/       # Lab exercises, experiment implementations (Expt 1-4), and practical assignments
 ├── 📂 Skill/           # Skill development tasks, problem-solving challenges, and practice modules
 └── 📂 Project/         # Main DSA course project source code and documentation
 ```
@@ -26,9 +26,20 @@ The repository is organized into three main folders:
 
 | Folder | Description |
 | :--- | :--- |
-| [**Practical**](./Practical/) | Contains all weekly practical lab experiments, code files, and lab documentation. |
+| [**Practical**](./Practical/) | Contains Java implementations and solution files for Experiments 1-4 (Corpus Loader, Query Processor, Naïve/KMP Search, Rabin-Karp Search). |
 | [**Skill**](./Skill/) | Contains skill building tasks, algorithm exercises, and practice problem sets. |
 | [**Project**](./Project/) | Contains the comprehensive DSA project implementation, design documentation, and source code. |
+
+---
+
+## 🧪 Practical Experiments (TextHack System)
+
+| Experiment | Title | Description | Code File | Solution File |
+| :--- | :--- | :--- | :--- | :--- |
+| **Expt 1** | Corpus Loader | Reads articles from corpus and populates repository storage | [`CorpusLoader.java`](./Practical/CorpusLoader.java) | [`DSA Expt-1 Solution.txt`](./Practical/DSA%20Expt-1%20Solution.txt) |
+| **Expt 2** | Query Processor | Keyword search engine across repository articles | [`QueryProcessor.java`](./Practical/QueryProcessor.java) | [`DSA Expt-2 Solution.txt`](./Practical/DSA%20Expt-2%20Solution.txt) |
+| **Expt 3** | Pattern Search | Substring matching using Naïve and KMP algorithms | [`PatternSearch.java`](./Practical/PatternSearch.java) | [`DSA Expt-3 Solution.txt`](./Practical/DSA%20Expt-3%20Solution.txt) |
+| **Expt 4** | Rabin-Karp Search | Rolling hash-based pattern matching algorithm | [`RabinKarpSearch.java`](./Practical/RabinKarpSearch.java) | [`DSA Expt-4 Solution.txt`](./Practical/DSA%20Expt-4%20Solution.txt) |
 
 ---
 

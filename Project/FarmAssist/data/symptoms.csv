@@ -1,0 +1,79 @@
+# Symptom keywords used by Aho-Corasick to detect problems inside a farmer question.
+# One keyword per line. Short keywords are fine because matching is prefix based,
+# so "curl" also detects "curling" and "leaf curl".
+yellow
+yellowing
+brown spot
+dark spot
+grey spot
+purple spot
+black spot
+spot
+curl
+wilt
+droop
+powder
+powdery
+rot
+rotting
+drying
+dried
+stunted growth
+stunted
+lesion
+mosaic
+pustule
+patches
+leaf fall
+leaf drop
+fruit rot
+fruit spot
+dieback
+blacken
+white growth
+white coating
+water soaked
+holes
+smell
+foul smell
+swollen
+collapse
+mottled
+streak
+stripe
+ring
+concentric ring
+sunken
+cracked
+canker
+scab
+gum
+ooze
+sticky
+sooty
+blister
+shot hole
+burn
+scorch
+bushy
+deformed
+small leaves
+no flowering
+no fruit set
+empty seed
+poor germination
+webbing
+boring
+tunnel
+chewed
+eaten
+wither
+pale
+whitish
+reddish
+orange powder
+black powder
+soft rot
+root rot
+collar rot
+neck rot

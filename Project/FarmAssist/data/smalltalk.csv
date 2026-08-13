@@ -1,0 +1,11 @@
+# Everyday conversation so the bot does not look dead when someone just says hi.
+# Format: trigger1,trigger2,trigger3 | response
+hi,hello,hey,helo,hii,hlo,hai,namaste,namaskar,good morning,good afternoon,good evening,start|Hello. I am Sophie, your farming helper. Ask me about any crop, disease, symptom or fertilizer. Type help to see example questions.
+how are you,how r u,how do you do,kaise ho,whats up,what is up|I am working fine and ready to help. Tell me which crop you are growing or what problem you are seeing in your field.
+who are you,what are you,your name,who made you,about you,introduce yourself|I am Sophie, the FarmAssist agriculture knowledge search system. I answer farming questions using eight classic algorithms - KMP, Rabin-Karp, Aho-Corasick, Edit Distance, Suffix Array with LCP, Knapsack, Bipartite Matching and Randomized QuickSort.
+what can you do,what do you do,your features,capabilities,how can you help,help me|I can do five things. One, find information about a crop. Two, guess the disease from the symptoms you describe. Three, choose the best fertilizers inside your budget. Four, assign one fertilizer to each of your crops. Five, search my farming articles. Type help for real examples.
+thanks,thank you,thankyou,thanx,dhanyavad,thq|You are welcome. Ask me anything else about your field.
+bye,goodbye,see you,ok bye,good night,exit chat|Goodbye and good luck with your crop. Type exit to close the program.
+yes,yeah,ok,okay,hmm,fine,sure|Alright. Ask me your next farming question whenever you are ready.
+sorry,my mistake|No problem at all. Please type your question again.
+good,nice,great,super,awesome,well done|Thank you. Ask me another farming question.

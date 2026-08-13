@@ -1,0 +1,4 @@
+Algorithms
+
+Algorithms are fundamental techniques in computer science.
+Searching and sorting algorithms are commonly used to process data.

@@ -1,0 +1,66 @@
+# FarmAssist disease database
+# Format: name | affectedCrops | symptoms | treatment
+blast|rice,finger millet|grey spots on leaves,neck rot,white panicle,diamond shaped lesions|Spray tricyclazole 0.06 percent at boot leaf stage. Avoid excess nitrogen and keep a thin water film in the field.
+bacterial leaf blight|rice|yellow leaf margins,drying of leaf tips,wilting of seedlings,wavy leaf edges|Use resistant varieties. Spray streptocycline with copper oxychloride and drain the field for two days.
+brown spot|rice|brown oval spots,dark brown lesions,weak grain filling|Apply mancozeb 0.25 percent. Correct potassium and zinc deficiency in the soil.
+sheath blight|rice|greenish grey lesions on sheath,snake skin pattern,drying of leaves|Spray hexaconazole or validamycin. Avoid close spacing and heavy nitrogen dose.
+rust|wheat,soybean,barley,lentil,linseed,safflower,groundnut,peas|orange pustules,yellow stripes on leaves,reddish brown powder,drying of leaves|Spray propiconazole 0.1 percent at first appearance and repeat after fifteen days.
+powdery mildew|wheat,mango,peas,grapes,cucumber,pumpkin,okra,barley,coriander|white powdery patches,leaf curling,stunted growth,whitish coating on stem|Spray wettable sulphur 0.2 percent or dinocap in the early morning hours.
+karnal bunt|wheat|black powder in grain,fishy smell,partial grain damage|Treat seed with carboxin and spray propiconazole at ear emergence.
+loose smut|wheat,barley|black powdery ear head,ear replaced by black mass,early ear emergence|Treat the seed with carboxin or use solar heat treatment before sowing.
+downy mildew|maize,onion,sunflower,grapes,cucumber,cabbage,cauliflower,pearl millet,sorghum|yellow patches on upper leaf,white growth on lower leaf,drying of leaf tips,downy fungal mass|Spray metalaxyl with mancozeb and improve drainage of the field.
+leaf blight|maize,carrot,onion|long brown lesions,drying of leaves,boat shaped spots|Spray mancozeb 0.25 percent twice at ten day intervals and remove infected lower leaves.
+grain mould|sorghum|discoloured grain,fungal growth on ear head,black or pink grain|Harvest at the right maturity and dry the grain quickly. Spray captan if rain occurs at grain filling.
+ergot|pearl millet,sorghum|honey dew from florets,dark sclerotia in ear head,sticky ear head|Remove and burn the infected ear heads. Treat seed in twenty percent salt solution before sowing.
+wilt|cotton,sugarcane,banana,chickpea,pigeonpea,lentil,castor,guava,safflower,coriander,cumin,peas|sudden drooping,yellowing of lower leaves,vascular browning,drying of whole plant|Drench the soil with carbendazim and follow crop rotation with a non host crop.
+ascochyta blight|chickpea|brown spots with dark rings,drying of stem,broken stem at node|Spray chlorothalonil and use certified disease free seed.
+collar rot|groundnut,chickpea,lentil,papaya|rotting at soil level,white fungal growth at collar,seedling collapse|Treat seed with trichoderma. Avoid deep sowing and improve drainage of the field.
+sterility mosaic|pigeonpea|bushy pale plant,no flowering,small leaves|Remove infected plants early and control the eriophyid mite with sulphur spray.
+yellow mosaic|soybean,green gram,black gram,cowpea,okra|yellow mosaic patches,puckering of leaves,stunted growth|Control the whitefly vector and sow resistant varieties within the recommended window.
+cercospora leaf spot|green gram,groundnut|circular brown spots with grey centre,premature leaf fall|Spray carbendazim or mancozeb twice at fifteen day intervals.
+tikka leaf spot|groundnut|dark brown circular spots,premature leaf fall,weak pod filling|Spray chlorothalonil or carbendazim twice starting at forty days after sowing.
+bacterial pustule|soybean|small raised pustules,brown angular spots,drying of leaves|Spray streptocycline with copper oxychloride and use clean certified seed.
+white rust|mustard,radish|white pustules on lower leaf,swollen flower stalk,leaf curling|Spray metalaxyl with mancozeb and remove the deformed flower stalks.
+alternaria blight|mustard,sunflower,safflower,radish|dark concentric spots,brown lesions on pod,drying of leaves|Spray mancozeb 0.25 percent at first symptom and repeat after fifteen days.
+head rot|sunflower|rotting of back of head,white fungal growth,fallen seeds|Avoid overhead irrigation at flowering and spray carbendazim on the head.
+phyllody|sesame|flowers turn into green leaves,no seed set,bushy top|Remove infected plants and control the leafhopper vector with imidacloprid.
+stem rot|jute,sesame|blackening of stem,rotting near soil,drying of whole plant|Treat seed with carbendazim and follow three year crop rotation.
+leaf curl|cotton,tomato,chilli,capsicum|upward curling of leaves,thickened veins,yellowing of leaf edges,stunted growth,leathery leaves|Control the whitefly vector with imidacloprid and remove infected plants from the field.
+boll rot|cotton|rotting of bolls,discoloured lint,dark sunken spots on boll|Spray copper oxychloride and remove damaged bolls. Control the pink bollworm properly.
+bacterial blight|cotton,cowpea,pomegranate|angular water soaked spots,black arm on stem,oily spots on fruit|Spray streptocycline with copper oxychloride and destroy infected plant residue.
+red rot|sugarcane|red discolouration inside stem,alcoholic smell,drying of leaves,shrunken internodes|Remove and burn infected clumps. Plant only healthy setts treated with carbendazim.
+smut|sugarcane|black whip like shoot,thin grassy tillers,stunted clump|Remove the whips before they burst and treat setts with hot water and carbendazim.
+grassy shoot|sugarcane|many thin tillers,pale white leaves,no cane formation|Use disease free seed cane and treat setts by moist hot air treatment.
+black shank|tobacco|blackening of stem base,sudden wilting,black discs inside stem|Drench with metalaxyl and rotate with a non host crop for three years.
+early blight|tomato,potato|concentric rings on leaves,brown spots,yellowing around the spots,leaf drop,target board pattern|Spray mancozeb 0.25 percent every ten days and remove the lower infected leaves.
+late blight|potato,tomato|water soaked lesions,white fungal growth,blackening of stem,rotting tuber|Spray metalaxyl with mancozeb immediately in cloudy humid weather and destroy infected plants.
+black scurf|potato|black hard crusts on tuber,stunted sprouts,brown lesions on stolon|Treat the seed tubers with boric acid solution and follow a long crop rotation.
+damping off|chilli,tomato,capsicum,brinjal|seedling collapse,rotting at soil level,water soaked lesions|Drench the nursery with copper oxychloride and avoid excess watering of the beds.
+purple blotch|onion,garlic|purple lesions on leaves,leaf tip drying,neck rot|Spray mancozeb with a sticker at ten day intervals starting forty five days after transplanting.
+basal rot|onion,garlic|rotting of the base plate,yellowing of leaves,easy pulling of the plant|Treat the bulbs with carbendazim before planting and improve field drainage.
+bacterial wilt|brinjal,chilli,capsicum,ginger|sudden wilting without yellowing,white ooze from cut stem,drying of whole plant|Remove infected plants at once and rotate with a cereal crop. Apply bleaching powder in the soil.
+phomopsis blight|brinjal|grey spots on leaves,sunken spots on fruit,fruit rot|Spray carbendazim and use clean certified seed from a healthy crop.
+little leaf|brinjal|very small leaves,bushy growth,no fruit set|Remove infected plants and control the leafhopper vector with dimethoate.
+yellow vein mosaic|okra|yellow network of veins,small hard fruit,stunted growth|Control the whitefly vector and grow resistant varieties. Remove infected plants early.
+black rot|cabbage,cauliflower|V shaped yellow patches at leaf margin,black veins,drying of leaves|Treat the seed in hot water and spray streptocycline with copper oxychloride.
+club root|cabbage,cauliflower|swollen club shaped roots,wilting in hot sun,stunted growth|Apply lime to raise the soil pH and follow a long rotation with non cruciferous crops.
+fusarium wilt|watermelon,bitter gourd,okra|yellowing of one side,drooping of vine,brown vascular tissue|Use resistant varieties and drench with carbendazim. Avoid growing cucurbits in the same field.
+anthracnose|chilli,mango,grapes,cucumber,jute,cowpea,coffee,cashew|sunken dark spots on fruit,fruit rot,twig dieback,black lesions on leaf|Spray carbendazim 0.1 percent and collect and burn all the fallen infected fruit.
+rhizome rot|turmeric,ginger,cardamom|yellowing of lower leaves,soft rotting rhizome,drying of leaves,foul smell|Drench with metalaxyl and mancozeb and provide good drainage in the beds.
+leaf spot|turmeric,sapota,tea,finger millet,carrot,spinach,ginger|brown spots with yellow halo,drying of leaves,premature leaf fall|Spray mancozeb or carbendazim at fifteen day intervals and remove fallen leaves.
+panama wilt|banana|yellowing of lower leaves,splitting of pseudostem,sudden drooping,brown vascular tissue|Use tissue culture plants and drench with carbendazim. Avoid replanting banana in infected fields.
+sigatoka leaf spot|banana|yellow streaks on leaves,dark spots with grey centre,drying of leaves|Spray propiconazole with mineral oil and remove the badly infected old leaves.
+bunchy top|banana|bunched crown of small leaves,dark green streaks on midrib,stunted growth|Remove and destroy infected plants with the corm and control the banana aphid vector.
+malformation|mango|deformed bunched flower head,thick swollen shoot,no fruit set|Prune and destroy the malformed panicles and spray naphthalene acetic acid in October.
+fruit canker|guava,sweet orange|rough corky spots on fruit,raised brown lesions,cracked fruit|Spray copper oxychloride and prune out the affected twigs during the dry season.
+ring spot virus|papaya|ring shaped spots on fruit,yellow mottled leaves,oily streaks on stem|Remove infected plants early and control the aphid vector. Use a barrier crop of maize.
+citrus canker|sweet orange|raised corky spots with yellow halo,leaf fall,twig dieback|Spray streptocycline with copper oxychloride and prune out infected twigs.
+gummosis|sweet orange|gum oozing from trunk,bark cracking,yellowing of leaves|Scrape the affected bark and apply bordeaux paste. Avoid water stagnation near the trunk.
+fruit spot|pomegranate|dark sunken spots on fruit,cracked fruit,fruit rot|Spray mancozeb with copper oxychloride and remove all the fallen fruit from the orchard.
+bud rot|coconut|rotting of the central spindle leaf,foul smell,drooping crown|Remove the rotten tissue and apply bordeaux paste. Improve drainage around the palm basin.
+quick wilt|black pepper|sudden yellowing of vine,black lesions on stem,defoliation of the vine|Drench with potassium phosphonate and provide sharp drainage in the monsoon.
+blister blight|tea|translucent blisters on leaf,white powder on lower side,shot hole in leaf|Spray copper oxychloride at weekly intervals during the wet monsoon months.
+leaf rust|coffee|orange yellow powder on lower leaf,heavy leaf fall,dieback of twigs|Spray bordeaux mixture before and after the monsoon and maintain proper shade.
+dieback|cashew,mango,sweet orange|drying of twigs from the tip,black shrivelled shoot,leaf fall|Prune the affected shoots well below the dry portion and spray copper oxychloride.
+sooty mould|sapota,mango,sweet orange|black sooty coating on leaves,sticky leaf surface,reduced growth|Control the sucking pests that produce honey dew and wash the leaves with starch solution.
+root rot|papaya,carrot,tea,fenugreek,jute|rotting of roots,yellowing of whole plant,easy uprooting|Improve drainage and drench with carbendazim or trichoderma around the root zone.

@@ -1,0 +1,418 @@
+# Words farmers actually use, mapped to the word our database uses.
+# The whole query is rewritten before searching, so "paddy" finds "rice".
+# Format: alias | canonical
+# ---- cereals and millets ----
+paddy|rice
+dhan|rice
+chawal|rice
+gehun|wheat
+gehu|wheat
+corn|maize
+makka|maize
+bhutta|maize
+jowar|sorghum
+cholam|sorghum
+great millet|sorghum
+bajra|pearl millet
+bajri|pearl millet
+ragi|finger millet
+mandua|finger millet
+jau|barley
+# ---- pulses ----
+chana|chickpea
+bengal gram|chickpea
+gram|chickpea
+kabuli chana|chickpea
+tur|pigeonpea
+arhar|pigeonpea
+red gram|pigeonpea
+moong|green gram
+mung|green gram
+urad|black gram
+urd|black gram
+masoor|lentil
+matki|cowpea
+lobia|cowpea
+# ---- oilseeds ----
+peanut|groundnut
+ground nut|groundnut
+mungfali|groundnut
+moongfali|groundnut
+soya|soybean
+soyabean|soybean
+soya bean|soybean
+sarson|mustard
+rai|mustard
+rapeseed|mustard
+til|sesame
+gingelly|sesame
+arandi|castor
+kusum|safflower
+alsi|linseed
+flax|linseed
+surajmukhi|sunflower
+# ---- cash crops ----
+kapas|cotton
+sugar cane|sugarcane
+ganna|sugarcane
+patsan|jute
+tambaku|tobacco
+# ---- vegetables ----
+aloo|potato
+batata|potato
+pyaz|onion
+kanda|onion
+lehsun|garlic
+tamatar|tomato
+baingan|brinjal
+eggplant|brinjal
+aubergine|brinjal
+bhindi|okra
+lady finger|okra
+ladies finger|okra
+ladyfinger|okra
+patta gobhi|cabbage
+band gobhi|cabbage
+phool gobhi|cauliflower
+gobhi|cauliflower
+gajar|carrot
+mooli|radish
+kheera|cucumber
+lauki|bottle gourd
+ghiya|bottle gourd
+karela|bitter gourd
+kaddu|pumpkin
+palak|spinach
+matar|peas
+green peas|peas
+mirchi|chilli
+mirch|chilli
+chili|chilli
+chile|chilli
+shimla mirch|capsicum
+bell pepper|capsicum
+adrak|ginger
+haldi|turmeric
+# ---- fruits ----
+kela|banana
+aam|mango
+amrud|guava
+papita|papaya
+angur|grapes
+anar|pomegranate
+santra|sweet orange
+mosambi|sweet orange
+chikoo|sapota
+chiku|sapota
+tarbooj|watermelon
+nariyal|coconut
+# ---- spices and plantation ----
+dhaniya|coriander
+jeera|cumin
+methi|fenugreek
+kali mirch|black pepper
+elaichi|cardamom
+chai|tea
+kaju|cashew
+# ---- fertilizer short names ----
+mop|muriate of potash
+ssp|single super phosphate
+sop|potassium sulphate
+map|mono ammonium phosphate
+can|calcium ammonium nitrate
+fym|farmyard manure
+cow dung|farmyard manure
+gobar|farmyard manure
+khaad|fertilizer
+urvarak|fertilizer
+# ---- general farming words ----
+fungus|disease
+infection|disease
+sickness|disease
+bimari|disease
+rog|disease
+insect|pest
+keeda|pest
+watering|irrigation
+water supply|irrigation
+mitti|soil
+zameen|soil
+fasal|crop
+kheti|farming
+paidawar|yield
+beej|seed
+patta|leaf
+patti|leaf
+phal|fruit
+phool|flower
+jad|root
+# ---- regional names: Telugu, Tamil, Kannada, Marathi, Bengali -------------
+# ---- cereals and millets ----
+nelu|rice
+biyyam|rice
+bhatta|rice
+vari|rice
+godhumalu|wheat
+godhumai|wheat
+godhi|wheat
+gahu|wheat
+ghoom|wheat
+mokkajonna|maize
+makka cholam|maize
+mekke jola|maize
+makai|maize
+maka|maize
+jonna|sorghum
+jola|sorghum
+jwari|sorghum
+sajja|pearl millet
+kambu|pearl millet
+sajje|pearl millet
+ragulu|finger millet
+kelvaragu|finger millet
+nachni|finger millet
+yavva|barley
+jave|barley
+yava|barley
+# ---- pulses ----
+senagalu|chickpea
+kadalai|chickpea
+kadale|chickpea
+harbhara|chickpea
+chhola|chickpea
+kandi|pigeonpea
+togari|pigeonpea
+thogari|pigeonpea
+tuvar|pigeonpea
+pesalu|green gram
+payaru|green gram
+hesaru|green gram
+minumulu|black gram
+ulundu|black gram
+uddu|black gram
+misur pappu|lentil
+masur|lentil
+alasandalu|cowpea
+alsande|cowpea
+karamani|cowpea
+chawli|cowpea
+# ---- oilseeds ----
+verusenagalu|groundnut
+verkkadalai|groundnut
+nelakadale|groundnut
+shengdana|groundnut
+china badam|groundnut
+bhatma|soybean
+aavalu|mustard
+kadugu|mustard
+sasive|mustard
+mohari|mustard
+shorshe|mustard
+poddutirugudu|sunflower
+suryakanthi|sunflower
+surajkanti|sunflower
+suryaphul|sunflower
+nuvvulu|sesame
+ellu|sesame
+teel|sesame
+amudamu|castor
+aamanakku|castor
+haralu|castor
+erandi|castor
+kusuma|safflower
+sendurakkam|safflower
+kusubi|safflower
+kardai|safflower
+avise|linseed
+jewas|linseed
+tishi|linseed
+# ---- cash crops ----
+pratti|cotton
+paruthi|cotton
+hatti|cotton
+kapus|cotton
+cheraku|sugarcane
+karumbu|sugarcane
+kabbu|sugarcane
+oos|sugarcane
+janapa|jute
+chanal|jute
+joot|jute
+pogaku|tobacco
+pugaiyilai|tobacco
+hogesoppu|tobacco
+tamraku|tobacco
+# ---- vegetables ----
+tamata|tomato
+thakkali|tomato
+tamate|tomato
+bangaladumpa|potato
+urulaikizhangu|potato
+aalugadde|potato
+ullipaya|onion
+vengayam|onion
+erulli|onion
+kandaa|onion
+peyaj|onion
+vellulli|garlic
+poondu|garlic
+bellulli|garlic
+lasun|garlic
+roshun|garlic
+vankaya|brinjal
+kathirikai|brinjal
+badanekai|brinjal
+vangi|brinjal
+begun|brinjal
+benda|okra
+vendakkai|okra
+bende|okra
+bhendi|okra
+dheros|okra
+kobijonna|cabbage
+muttai kose|cabbage
+kobi|cabbage
+badhakopi|cabbage
+kobipuvvu|cauliflower
+koovaipoo|cauliflower
+hukosu|cauliflower
+phulkobi|cauliflower
+fulkopi|cauliflower
+gajjara|carrot
+gajjari|carrot
+mullangi|radish
+mula|radish
+mulo|radish
+dosakaya|cucumber
+vellari|cucumber
+southe|cucumber
+kakdi|cucumber
+shosha|cucumber
+sorakaya|bottle gourd
+suraikkai|bottle gourd
+sorekayi|bottle gourd
+dudhi|bottle gourd
+lau|bottle gourd
+kakarakaya|bitter gourd
+pavakkai|bitter gourd
+hagalakayi|bitter gourd
+karle|bitter gourd
+korola|bitter gourd
+gummadikaya|pumpkin
+parangikkai|pumpkin
+kumbalakayi|pumpkin
+lal bhopla|pumpkin
+kumro|pumpkin
+palakura|spinach
+pasalai|spinach
+palong|spinach
+batani|peas
+pattani|peas
+vatan|peas
+mirapakaya|chilli
+milagai|chilli
+menasinakayi|chilli
+simla mirchi|capsicum
+koda milagai|capsicum
+doni menasinakayi|capsicum
+# ---- fruits ----
+arati pandu|banana
+vaazhai|banana
+bale hannu|banana
+kola|banana
+mamidi pandu|mango
+mambazham|mango
+mavina hannu|mango
+amba|mango
+jama pandu|guava
+koyya|guava
+seebe hannu|guava
+peru|guava
+peyara|guava
+boppayi|papaya
+pappali|papaya
+parangi hannu|papaya
+papai|papaya
+pepe|papaya
+drakusha|grapes
+thiratchai|grapes
+drakkshi|grapes
+draksha|grapes
+daninma|pomegranate
+maadhulai|pomegranate
+dalimbe|pomegranate
+dalimb|pomegranate
+dalim|pomegranate
+batayi|sweet orange
+sathukudi|sweet orange
+kithale|sweet orange
+kamala|sweet orange
+puchakaya|watermelon
+kalingada|watermelon
+kalingad|watermelon
+tormuj|watermelon
+kobbari|coconut
+thengai|coconut
+thenginu|coconut
+naral|coconut
+narikel|coconut
+# ---- spices and plantation ----
+dhaniyalu|coriander
+kothamalli|coriander
+kottambari|coriander
+dhania|coriander
+dhane|coriander
+dhone|coriander
+jilakarra|cumin
+seeragam|cumin
+jeerige|cumin
+jira|cumin
+jeere|cumin
+menthulu|fenugreek
+vendhayam|fenugreek
+menthe|fenugreek
+miriyalu|black pepper
+milagu|black pepper
+menasu|black pepper
+kali miri|black pepper
+gol morich|black pepper
+elakulu|cardamom
+elakkai|cardamom
+elakki|cardamom
+velchi|cardamom
+elaach|cardamom
+allam|ginger
+inji|ginger
+shunti|ginger
+aale|ginger
+ada|ginger
+pasupu|turmeric
+manjal|turmeric
+arishina|turmeric
+halad|turmeric
+holud|turmeric
+chaha|tea
+kaapi|coffee
+koppi|coffee
+kapi|coffee
+jeedi mamidi|cashew
+mundiri|cashew
+godambi|cashew
+# ---- everyday Telugu farming words ----
+panta|crop
+vyavasayam|farming
+sagubadi|farming
+mannu|soil
+neellu|water
+vittanalu|seed
+eeku|irrigation
+rogam|disease
+purugu|pest
+poka|pest
+akku|leaf
+veru|root
+puvvu|flower
+pandu|fruit
+# ---- pest plurals ----
+whiteflies|whitefly
+aphids|aphid

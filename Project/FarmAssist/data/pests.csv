@@ -1,0 +1,48 @@
+# FarmAssist pest database
+# Format: name | affectedCrops | damage | control
+# damage is written with the same symptom keywords as diseases.csv, so a farmer
+# describing what they see can be matched to the pest that caused it.
+stem borer|rice,maize,sugarcane|dead heart,drying of central shoot,white ear heads,borer holes in stem|Remove and destroy infested tillers. Flood the field for two days. Use carbofuran granules in the nursery and spray chlorantraniliprole at early infestation.
+brown plant hopper|rice|hopper burn,yellowing of plants,drying in circular patches,honey dew on leaves|Drain the field and spray imidacloprid or buprofezin. Conserve natural enemies like mirid bugs.
+gall midge|rice|silver shoot,no ear head,dead heart like damage|Spray chlorantraniliprole at tillering. Grow resistant varieties and avoid continuous water stagnation.
+rice hispa|rice|white streaks on leaves,leaf skeletonization,defoliation|Spray phosphamidon or carbaryl and destroy the adults by hand netting in the nursery.
+rice leaf folder|rice|leaves folded,white streaks on leaf,leaf skeletonization|Spray chlorantraniliprole and avoid excess nitrogen. Conserve egg parasitoids.
+rice bug|rice|milky grains sucked,empty grains,chaffy grains|Spray malathion at the milky stage. Avoid late sowing and destroy weed hosts.
+leaf hopper|rice,maize|yellowing of leaves,hopper burn,drying of leaf tips|Spray imidacloprid and maintain optimum plant spacing.
+pink bollworm|cotton|damaged bolls,rosette flowers,rotting of bolls,discoloured lint|Grow Bt hybrids, use pheromone traps and spray emamectin benzoate at square formation. Destroy the trash after harvest.
+american bollworm|cotton,tomato,chickpea|bore holes in bolls and fruit,excreta near entry hole,damaged squares|Spray neem seed kernel extract early and emamectin benzoate when the pest crosses the threshold. Use pheromone traps.
+spotted bollworm|cotton|damaged shoots,drying of terminals,damaged squares and bolls|Clip and destroy damaged shoots. Spray cypermethrin at peak activity.
+jassid|cotton,okra|yellowing of leaf margins,curling of leaves,hoppers on lower leaf|Spray imidacloprid or dimethoate and avoid excess nitrogen.
+whitefly|cotton,okra,chilli,brinjal,tomato|yellowing of leaves,sticky honey dew,sooty mould,leaf curling|Spray imidacloprid or acetamiprid. Remove weed hosts and use yellow sticky traps.
+thrips|chilli,onion,garlic,tea,cotton|silvery streaks on leaves,leaf curling,stunted growth,scars on fruit|Spray spinosad or fipronil and keep the crop well irrigated. Remove alternate weed hosts.
+shoot and fruit borer|brinjal|bore holes in shoots and fruit,drooping shoots,excreta in fruit|Clip and destroy infested shoots weekly. Use pheromone traps and spray chlorantraniliprole.
+fruit fly|guava,mango,pumpkin,cucumber,bottle gourd,bitter gourd,watermelon,chilli|maggots inside fruit,fruit rotting,egg punctures on fruit,oozing sticky juice|Use cue lure traps and bait sprays. Collect and destroy fallen infested fruit.
+diamondback moth|cabbage,cauliflower,capsicum|small holes in leaves,chewed leaves,green caterpillars on leaf,frass on leaves|Spray spinosad or Bt. Use pheromone traps and avoid continuous cabbage cultivation.
+aphid|mustard,peas,brinjal,chilli,okra,papaya,cotton|curling of leaves,sticky honey dew,sooty mould,reduced growth|Spray imidacloprid or dimethoate. Conserve lady bird beetles.
+pod borer|chickpea,pigeonpea,green gram,black gram,peas|caterpillar inside pod,round holes in pod,damaged seeds,excreta in pod|Spray indoxacarb at pod formation. Use pheromone traps and set bird perches.
+gram pod borer|chickpea,peas|larvae feeding on leaves and pods,round holes in pods,damaged seeds|Spray indoxacarb at flowering. Use pheromone traps and early sowing.
+eriophyid mite|pigeonpea|bushy pale plant,small leaves,no flowering,sterility mosaic spread|Spray wettable sulphur and remove infected plants early.
+red spider mite|tea,chilli,tomato,capsicum,brinjal|white stippling on leaves,webbing on leaf,leaf bronzing,leaf fall|Spray dicofol or hexythiazox and maintain humidity. Conserve predatory mites.
+tea mosquito bug|cashew|brown spots on tender shoots,drying of shoots,damaged flower panicle,dropping of young nuts|Spray at flushing and flowering with quinalphos. Remove and destroy damaged shoots.
+mango hopper|mango|sucking of flower sap,drying of inflorescence,sticky honey dew,sooty mould|Spray imidacloprid at panicle emergence. Keep the orchard clean and prune dense canopies.
+mango mealybug|mango|sucking of sap from shoots,stunted growth,sooty mould,leaf fall|Band the trunk with polythene. Spray fish oil rosin soap and release lady bird beetles.
+coconut rhinoceros beetle|coconut|V shaped cuts on leaves,damaged unopened fronds,entry holes in crown|Remove and destroy breeding sites like dung heaps. Apply naphthalene balls in the crown and use pheromone traps.
+red palm weevil|coconut|yellowing of inner leaves,oozing liquid from trunk,boring holes at the base,drying of crown|Remove and burn infested palms. Inject systemic insecticide in the trunk and use pheromone traps.
+coconut mite|coconut|brown necrotic patches on young nuts,damaged nut surface,reduced nut size|Spray wettable sulphur on the buttons and release predatory mites.
+banana aphid|banana|curling of leaves,sticky honey dew,spread of bunchy top virus|Spray dimethoate and remove infected plants with the corm. Control ants that protect the aphids.
+banana weevil|banana|boring in corm,rotting of pseudostem,reduced bunch,yellowing of leaves|Use clean suckers treated in hot water. Trap adults in split pseudostem and remove infested plants.
+pomegranate butterfly|pomegranate|holes in fruit,entry holes with excreta,rotting fruit|Remove infested fruit and spray cypermethrin at flowering. Keep the orchard clean.
+citrus psylla|sweet orange|curling of tender leaves,leaf galling,sticky honey dew|Spray dimethoate on new flush. Remove infested shoots and conserve parasitoids.
+leaf miner|tomato,brinjal,citrus,tea|serpentine tunnels in leaf,white wavy lines,leaf drying|Spray azadirachtin or imidacloprid. Remove and destroy mined leaves.
+white grub|sugarcane,groundnut,maize|roots eaten,plant wilting,rootless plant,dead patches in field|Apply chlorpyrifos to the soil at planting. Deep plough in summer to expose the grubs.
+termite|wheat,sugarcane,maize,groundnut|tunnels in stem,drying of plants,soil tubes on stem,plant pulled out easily|Treat seed and soil with chlorpyrifos or imidacloprid. Remove termite mounds from the field.
+cutworm|tomato,chilli,cabbage,cauliflower,onion|seedlings cut at ground level,plant wilting,fallen seedlings|Deep plough and destroy weeds. Spray chlorpyrifos at the base of seedlings in the evening.
+hairy caterpillar|groundnut,castor,sesame|caterpillars in groups,leaves eaten,defoliation,webbing on leaves|Spray chlorantraniliprole or dust the field with carbaryl. Collect and destroy the gregarious larvae.
+red hairy caterpillar|groundnut,cotton|leaves eaten,defoliation,plants stripped|Deep summer ploughing and spraying chlorantraniliprole. Set light traps.
+root knot nematode|okra,brinjal,tomato,banana|root galls,stunted growth,yellowing,wilting in hot sun|Use marigold as intercrop and neem cake in soil. Grow resistant varieties and solarise the nursery beds.
+sucking pest complex|cotton,chilli,okra|yellowing,curling,stunted growth,sticky leaves|Regular monitoring and need based spray of imidacloprid. Conserve natural enemies.
+mealybug|guava,papaya,sapota|white cottony masses on stem and fruit,stunted growth,sooty mould|Scrape off and spray fish oil rosin soap. Release lady bird beetles and prune infested parts.
+shot hole borer|tea|small holes in stems,flagging branches,drying of branches|Prune and destroy infested branches. Maintain good shade and remove weak bushes.
+coffee berry borer|coffee|holes at the tip of berries,damaged beans,berry fall|Pick all berries after harvest and use neem based sprays. Use traps and remove infested berries.
+earhead bug|sorghum,pearl millet|chaffy grains,empty ear head,grains sucked|Spray carbaryl or malathion at grain filling. Grow tolerant varieties.
+blister beetle|mango,pearl millet,groundnut|flower parts eaten,damaged inflorescence,no fruit set|Spray malathion in the evening and hand collect the beetles.

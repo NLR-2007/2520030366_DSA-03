@@ -1,0 +1,41 @@
+# FarmAssist fertilizer database
+# Format: name | N | P | K | costPerBag | suitedCrops (or all) | benefitScore
+# N P K are percentages. Cost is rupees per standard bag. Benefit is 0 to 100.
+urea|46|0|0|300|rice,wheat,maize,sugarcane,banana,sorghum,pearl millet,barley,tobacco|70
+dap|18|46|0|1350|wheat,rice,cotton,mustard,maize,soybean,potato|85
+muriate of potash|0|0|60|850|banana,potato,turmeric,sugarcane,coconut,black pepper,grapes|75
+potassium sulphate|0|0|50|1900|grapes,tomato,chilli,tobacco,mango|82
+single super phosphate|0|16|0|450|groundnut,soybean,mustard,chickpea,lentil,sesame|55
+rock phosphate|0|20|0|500|soybean,groundnut,mustard,pigeonpea,tea|47
+npk 10-26-26|10|26|26|1200|cotton,chilli,tomato,potato,capsicum,brinjal|80
+npk 12-32-16|12|32|16|1300|rice,wheat,maize,sugarcane,cotton|83
+npk 20-20-0|20|20|0|1100|maize,rice,wheat,barley,sorghum|72
+npk 19-19-19|19|19|19|1800|all|86
+npk 28-28-0|28|28|0|1500|rice,wheat,maize,cotton|81
+ammonium sulphate|21|0|0|900|rice,onion,chilli,tea,garlic|60
+calcium ammonium nitrate|25|0|0|700|wheat,maize,sunflower,barley,peas|58
+calcium nitrate|15|0|0|1400|tomato,capsicum,grapes,banana,cabbage|76
+potassium nitrate|13|0|45|1600|tomato,banana,mango,grapes,pomegranate|88
+mono ammonium phosphate|12|61|0|2100|grapes,pomegranate,capsicum,tomato|84
+farmyard manure|1|1|1|250|all|60
+vermicompost|1|1|1|400|tomato,onion,chilli,turmeric,ginger,capsicum,spinach|65
+poultry manure|3|2|2|350|maize,vegetables,brinjal,okra,cabbage|63
+neem cake|5|1|1|600|cotton,chilli,groundnut,sugarcane,brinjal|62
+castor cake|4|1|1|550|sugarcane,banana,turmeric,ginger|57
+mustard cake|5|2|1|700|potato,onion,garlic,tobacco|61
+bone meal|3|20|0|700|mango,banana,turmeric,guava,sapota|52
+green manure sunhemp|2|1|1|200|rice,sugarcane,cotton,maize|58
+gypsum|0|0|0|300|groundnut,onion,garlic,cotton,soybean|45
+zinc sulphate|0|0|0|550|rice,maize,banana,sugarcane,citrus|50
+ferrous sulphate|0|0|0|500|groundnut,sugarcane,rice,sweet orange|46
+magnesium sulphate|0|0|0|450|coconut,banana,potato,black pepper|44
+borax|0|0|0|600|cauliflower,cabbage,sunflower,mango,groundnut|43
+sulphur dust|0|0|0|350|mustard,onion,garlic,groundnut,sesame|48
+agricultural lime|0|0|0|200|tea,coffee,cardamom,black pepper,cabbage|42
+micronutrient mixture|0|0|0|500|all|48
+liquid biofertilizer|2|1|1|350|all|54
+azospirillum|1|0|0|180|rice,maize,sorghum,sugarcane,pearl millet|52
+rhizobium culture|1|0|0|150|chickpea,pigeonpea,green gram,black gram,groundnut,soybean,lentil,peas,cowpea|66
+phosphate solubilising bacteria|0|1|0|170|all|53
+humic acid|0|0|0|650|grapes,banana,tomato,pomegranate|59
+seaweed extract|1|0|1|900|grapes,pomegranate,mango,capsicum|64

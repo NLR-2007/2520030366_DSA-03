@@ -1,0 +1,37 @@
+# Patterns loaded into the Aho-Corasick automaton.
+# Format:  word | TYPE
+# TYPE is one of CROP, SYMPTOM, DISEASE.
+# Lines starting with # are ignored, blank lines too.
+
+rice|CROP
+paddy|CROP
+wheat|CROP
+tomato|CROP
+potato|CROP
+cotton|CROP
+maize|CROP
+onion|CROP
+banana|CROP
+groundnut|CROP
+
+yellow leaves|SYMPTOM
+yellowing|SYMPTOM
+brown spots|SYMPTOM
+grey spots|SYMPTOM
+white powder|SYMPTOM
+wilting|SYMPTOM
+leaf curl|SYMPTOM
+stunted growth|SYMPTOM
+rotting|SYMPTOM
+dry leaf tips|SYMPTOM
+holes in leaves|SYMPTOM
+black lesions|SYMPTOM
+
+blast|DISEASE
+late blight|DISEASE
+early blight|DISEASE
+powdery mildew|DISEASE
+bacterial leaf blight|DISEASE
+brown spot|DISEASE
+leaf curl virus|DISEASE
+downy mildew|DISEASE

@@ -1,0 +1,12 @@
+# Disease records. KMP searches inside the symptom column.
+# Format:  name | crops it attacks | symptoms | treatment
+# Crops and symptoms are separated by commas inside their own column.
+
+blast|rice, finger millet|grey spots, neck rot, white panicle, black lesions|Spray tricyclazole at the boot leaf stage. Avoid too much nitrogen and keep a thin film of water in the field.
+bacterial leaf blight|rice|yellowing, dry leaf tips, wilting, water soaked streaks|Drain the field and stop nitrogen for a while. Use a resistant variety in the next season.
+brown spot|rice|brown spots, dark brown lesions, weak grain filling|Apply mancozeb. Correct the potassium and zinc levels in the soil.
+late blight|potato, tomato|black lesions, white powder, rotting, wilting|Spray metalaxyl with mancozeb as soon as the weather turns cloudy and humid. Destroy the infected plants.
+early blight|tomato, potato|brown spots, yellowing, stunted growth|Spray mancozeb every ten days and remove the lower infected leaves.
+powdery mildew|wheat, onion, cotton|white powder, yellow leaves, dry leaf tips|Dust with sulphur early in the morning. Do not let the crop stay wet overnight.
+leaf curl virus|cotton, tomato|leaf curl, yellowing, stunted growth|Control the whitefly that carries it and pull out the infected plants.
+downy mildew|maize, onion, grapes|yellow leaves, grey spots, stunted growth|Spray metalaxyl and improve the drainage so water does not stand in the field.

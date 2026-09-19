@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class Trace {
 
-    public static boolean enabled = true;
+    public static boolean enabled = false;
 
     /** Set to false by the "color off" command through Theme. */
     public static boolean colours = true;

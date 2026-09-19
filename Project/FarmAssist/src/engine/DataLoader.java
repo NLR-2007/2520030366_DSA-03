@@ -27,14 +27,20 @@ public class DataLoader {
     public List<String[]> smallTalk = new ArrayList<>();   // {triggers, response}
 
     public void loadAll(String dataFolder) {
-        loadCrops(dataFolder + "/crops.csv");
-        loadDiseases(dataFolder + "/diseases.csv");
-        loadFertilizers(dataFolder + "/fertilizers.csv");
-        loadArticles(dataFolder + "/articles.csv");
-        loadPests(dataFolder + "/pests.csv");
-        loadSymptoms(dataFolder + "/symptoms.csv");
-        synonyms = readRows(dataFolder + "/synonyms.csv", 2);
-        smallTalk = readRows(dataFolder + "/smalltalk.csv", 2);
+        loadCrops(resolvePath(dataFolder, "crops"));
+        loadDiseases(resolvePath(dataFolder, "diseases"));
+        loadFertilizers(resolvePath(dataFolder, "fertilizers"));
+        loadArticles(resolvePath(dataFolder, "articles"));
+        loadPests(resolvePath(dataFolder, "pests"));
+        loadSymptoms(resolvePath(dataFolder, "symptoms"));
+        synonyms = readRows(resolvePath(dataFolder, "synonyms"), 2);
+        smallTalk = readRows(resolvePath(dataFolder, "smalltalk"), 2);
+    }
+
+    private String resolvePath(String dataFolder, String baseName) {
+        java.io.File txtFile = new java.io.File(dataFolder, baseName + ".txt");
+        if (txtFile.exists()) return txtFile.getPath();
+        return dataFolder + "/" + baseName + ".csv";
     }
 
     // ------------------------------------------------------------------ files

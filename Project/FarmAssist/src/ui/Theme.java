@@ -260,47 +260,25 @@ public final class Theme {
 
     // ------------------------------------------------------------- masthead
 
-    private static final String[] LOGO = {
-        " ████  ███  ████  █   █ █████ █████",
-        "█     █   █ █   █ █   █   █   █    ",
-        " ███  █   █ ████  █████   █   ████ ",
-        "    █ █   █ █     █   █   █   █    ",
-        "████   ███  █     █   █ █████ █████"
-    };
-
     /** The start up masthead. */
     public static String banner() {
         StringBuilder sb = new StringBuilder();
         sb.append(panelTop("", "")).append('\n');
         sb.append(panelRow("")).append('\n');
-
-        if (unicode) {
-            // a soft gradient down the letters, deep green to bright leaf
-            int[][] shade = {{ 74, 152,  95}, { 94, 176, 110}, {118, 202, 128},
-                             {142, 219, 145}, {166, 232, 160}};
-            for (int i = 0; i < LOGO.length; i++) {
-                String tinted = paint(code(shade[i][0], shade[i][1], shade[i][2], 32), LOGO[i]);
-                sb.append(panelRow(centre(tinted, INNER))).append('\n');
-            }
-        } else {
-            sb.append(panelRow(centre(bold("S O P H I E"), INNER))).append('\n');
-        }
-
+        sb.append(panelRow(centre(bold(leaf("K I S A A N   K R U S H I   A I")), INNER))).append('\n');
+        sb.append(panelRow(centre(stone("your digital agriculture officer"), INNER))).append('\n');
         sb.append(panelRow("")).append('\n');
-        String tag = crop("FarmAssist") + stone("  " + I_DOT + "  ")
-                   + chalk("your digital agriculture officer");
-        sb.append(panelRow(centre(tag, INNER))).append('\n');
         sb.append(panelBottom());
         return sb.toString();
     }
 
     /** What the assistant is called, everywhere on screen. */
-    public static final String SPEAKER = "Sophie";
+    public static final String SPEAKER = "Kisaan Krushi AI";
 
     /** Column the reply gutter bar sits in: " x " + name + two spaces. */
     private static final int GUTTER_COL = 3 + SPEAKER.length() + 2;
 
-    /** The line Sophie speaks on. */
+    /** The line Kisaan Krushi AI speaks on. */
     public static String voice() {
         return " " + leaf(I_CROP) + " " + bold(leaf(SPEAKER)) + ash("  " + BX_V + " ");
     }
@@ -319,7 +297,12 @@ public final class Theme {
      * visibly its own turn rather than one long run of text.
      */
     public static String prompt() {
-        return rule() + "\n " + bold(sun("you")) + ash("  " + I_CHEVRON + " ");
+        return rule() + "\n" + promptLine();
+    }
+
+    /** Just the "you ›" part, without the rule above it. */
+    public static String promptLine() {
+        return " " + bold(sun("you")) + ash("  " + I_CHEVRON + " ");
     }
 
     // ----------------------------------------------------------------- wrap

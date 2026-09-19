@@ -1,0 +1,7 @@
+# Live weather comes from OpenWeatherMap (free key at openweathermap.org).
+# Copy this file to weather.txt and paste your key.
+# key   - your API key
+# city  - the town used when a question does not name one; change it any
+#         time in the chat with   city guntur
+key=PASTE_YOUR_OPENWEATHERMAP_KEY_HERE
+city=Hyderabad

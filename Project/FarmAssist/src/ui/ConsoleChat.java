@@ -1,5 +1,6 @@
 package ui;
 
+import engine.AutocompleteEngine;
 import engine.DataLoader;
 import engine.Diagnoser;
 import engine.EntityExtractor;
@@ -11,6 +12,7 @@ import engine.SearchResult;
 import engine.SmallTalk;
 import engine.SpellCorrector;
 import engine.SynonymMapper;
+import engine.WeatherService;
 import model.Crop;
 import model.Fertilizer;
 import model.Pest;
@@ -18,7 +20,6 @@ import util.Trace;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -64,6 +65,10 @@ public class ConsoleChat {
     private Diagnoser diagnoser;
     private Recommender recommender;
     private Planner planner;
+    private AutocompleteEngine autocompleteEngine;
+    private WeatherService weather;
+
+    private List<String> currentSuggestions = new ArrayList<>();
 
     public static void main(String[] args) {
         String dataFolder = (args.length > 0) ? args[0] : "data";
@@ -77,9 +82,6 @@ public class ConsoleChat {
         System.out.println();
         System.out.println(Theme.banner());
 
-        System.out.println();
-        System.out.println(PAD + Theme.stone("loading the knowledge base ..."));
-
         data = new DataLoader();
         data.loadAll(dataFolder);
         if (data.articles.isEmpty()) {
@@ -90,26 +92,36 @@ public class ConsoleChat {
             return;
         }
 
-        smallTalk       = new SmallTalk(data);
-        synonymMapper   = new SynonymMapper(data);
-        spellCorrector  = new SpellCorrector(data, smallTalk.triggerWords());
-        entityExtractor = new EntityExtractor(data);
-        intentDetector  = new IntentDetector();
-        searchEngine    = new SearchEngine(data);
-        diagnoser       = new Diagnoser(data);
-        recommender     = new Recommender(data);
-        planner         = new Planner(data);
+        smallTalk          = new SmallTalk(data);
+        synonymMapper      = new SynonymMapper(data);
+        spellCorrector     = new SpellCorrector(data, smallTalk.triggerWords());
+        entityExtractor    = new EntityExtractor(data);
+        intentDetector     = new IntentDetector();
+        searchEngine       = new SearchEngine(data);
+        diagnoser          = new Diagnoser(data);
+        recommender        = new Recommender(data);
+        planner            = new Planner(data);
+        autocompleteEngine = new AutocompleteEngine(data);
+        weather            = new WeatherService(dataFolder);
 
-        printKnowledgeBase();
-        help();
+        System.out.println(PAD + Theme.stone("type ") + Theme.crop("help") + Theme.stone(" for examples and commands."));
 
-        Scanner sc = new Scanner(System.in);
+        LiveInput input = new LiveInput(q -> autocompleteEngine.complete(q, 6));
         while (true) {
             blankLine();
-            System.out.print(Theme.prompt());
-            if (!sc.hasNextLine()) break;
-            String line = sc.nextLine().trim();
+            String line = input.readLine();
+            if (line == null) break;
             if (line.isEmpty()) continue;
+
+            if (line.matches("\\d+") && !currentSuggestions.isEmpty()) {
+                int index = Integer.parseInt(line) - 1;
+                if (index >= 0 && index < currentSuggestions.size()) {
+                    String selected = currentSuggestions.get(index);
+                    System.out.println();
+                    say("Selected [" + line + "]: " + Theme.sun("\"" + selected + "\""));
+                    line = selected;
+                }
+            }
 
             if (isCommand(line)) {
                 if (line.equalsIgnoreCase("exit") || line.equalsIgnoreCase("quit")) {
@@ -122,7 +134,7 @@ public class ConsoleChat {
             }
             answer(line);
         }
-        sc.close();
+        input.close();
     }
 
     /** The "what is loaded" summary printed at start up. */
@@ -159,7 +171,31 @@ public class ConsoleChat {
 
         // ---- STAGE 0 : EVERYDAY CONVERSATION ----------------------------
         String chat = smallTalk.reply(rawQuery);
-        if (chat != null) { System.out.println(); say(chat); return; }
+        if (chat != null) {
+            System.out.println();
+            say(chat);
+            return;
+        }
+
+        // ---- STAGE 0.2 : LIVE WEATHER -----------------------------------
+        // before spell correction, because a town name is not in the
+        // dictionary and would be "corrected" into a crop.
+        if (isWeatherQuestion(rawQuery)) {
+            showWeather(extractCity(rawQuery));
+            return;
+        }
+
+        // ---- STAGE 0.5 : TRIE NEXT-WORD PREDICTION ----------------------
+        String[] phraseWords = rawQuery.trim().split("\\s+");
+        if (phraseWords.length == 1 && autocompleteEngine != null) {
+            List<String> predicted = autocompleteEngine.predict(rawQuery, 5);
+            if (!predicted.isEmpty()) {
+                System.out.println();
+                say("Next-word predictions for \"" + Theme.sun(rawQuery) + "\":");
+                showSuggestions(predicted);
+                return;
+            }
+        }
 
         // ---- STAGE 1 : EDIT DISTANCE + WORD SPLITTER --------------------
         SpellCorrector.Result sp = spellCorrector.correct(rawQuery);
@@ -707,6 +743,13 @@ public class ConsoleChat {
 
         if (c.equals("help")) { help(); return true; }
 
+        if (c.startsWith("city ") && c.length() > 5) {
+            weather.setDefaultCity(line.substring(5).trim());
+            System.out.println();
+            say("I will use " + Theme.sun(Theme.title(weather.defaultCity())) + " for weather from now on.");
+            return true;
+        }
+
         if (c.equals("clear") || c.equals("cls")) {
             Theme.clear();
             System.out.println();
@@ -810,30 +853,21 @@ public class ConsoleChat {
 
     private void help() {
         System.out.println();
-        System.out.println(Theme.section("just talking"));
-        System.out.println();
-        System.out.println(PAD + Theme.sun("hi") + Theme.ash("   " + Theme.I_DOT + "   ")
-                + Theme.sun("how are you") + Theme.ash("   " + Theme.I_DOT + "   ")
-                + Theme.sun("what can you do") + Theme.ash("   " + Theme.I_DOT + "   ")
-                + Theme.sun("thanks"));
-
-        System.out.println();
         System.out.println(Theme.section("in the field"));
         System.out.println();
         example(Theme.I_CROP,    "how to grow rice",            "full crop profile");
-        example(Theme.I_CROP,    "paddy",                       "local and Hindi names work too");
         example(Theme.I_CROP,    "compare rice and wheat",      "side by side facts");
         example(Theme.I_DISEASE, "my tomato has yellow leaves", "disease diagnosis");
         example(Theme.I_WARN,    "my brinjal has a pest",       "what attacks this crop");
         example(Theme.I_WARN,    "how to control whitefly",     "pest profile");
-        example(Theme.I_DISEASE, "lateblight",                  "joined words are split");
-        example(Theme.I_LENS,    "bhindi me yellow vein",       "mixed language");
 
         System.out.println();
         System.out.println(Theme.section("planning"));
         System.out.println();
         example(Theme.I_CROP, "which crops suit low rainfall", "area planner");
         example(Theme.I_CROP, "crops for a hot climate",       "rainfall and temperature");
+        example(Theme.I_WAVE, "weather in guntur",              "live weather and 5 day outlook");
+        example(Theme.I_WAVE, "will it rain tomorrow",          "your town (set it with: city guntur)");
 
         System.out.println();
         System.out.println(Theme.section("at the shop"));
@@ -849,9 +883,6 @@ public class ConsoleChat {
         command("list diseases | list pests | list articles", "");
         command("trace on | trace off",          "show the algorithm trace");
         command("algo demo",                     "run all 8 algorithms on tiny inputs");
-        command("color on | basic | off",        "if your terminal shows odd symbols");
-        command("ascii on | ascii off",          "plain borders instead of box drawing");
-        command("width 120 | center off",        "move the page inside the window");
         command("clear | help | exit",           "");
     }
 
@@ -862,6 +893,133 @@ public class ConsoleChat {
 
     private void command(String c, String what) {
         System.out.println(PAD + Theme.crop(Theme.padRight(c, 40)) + Theme.stone(what));
+    }
+
+    // ====================================================================
+    // LIVE WEATHER
+    // ====================================================================
+
+    private static final String[] WEATHER_WORDS = {
+        "weather", "forecast", "mausam", "will it rain", "rain today", "rain tomorrow",
+        "raining", "temperature today", "temperature in", "temperature at", "humidity",
+        "how hot", "how cold", "climate in", "climate at", "outlook"
+    };
+
+    private boolean isWeatherQuestion(String q) {
+        String c = q.toLowerCase();
+        for (String w : WEATHER_WORDS) if (c.contains(w)) return true;
+        return false;
+    }
+
+    /** "weather in guntur" -> "guntur"; nothing named -> the default town. */
+    private String extractCity(String q) {
+        String c = q.toLowerCase().replaceAll("[?.!,]", " ").trim();
+        java.util.regex.Matcher m = java.util.regex.Pattern
+                .compile("\\b(?:in|at|for|of|near)\\s+([a-z][a-z .'-]*)$").matcher(c);
+        if (m.find()) {
+            String city = m.group(1).trim()
+                    .replaceAll("\\b(today|tomorrow|now|this week|please)\\b", "").trim();
+            if (!city.isEmpty()) return city;
+        }
+        return weather.defaultCity();
+    }
+
+    private void showWeather(String city) {
+        WeatherService.Report r;
+        try {
+            r = weather.lookup(city);
+        } catch (Exception e) {
+            System.out.println();
+            say("I could not fetch the weather: " + e.getMessage());
+            return;
+        }
+
+        String where = r.city + (r.country.isEmpty() ? "" : ", " + r.country);
+        System.out.println();
+        say("Live weather for " + Theme.sun(where) + ":");
+        System.out.println();
+
+        System.out.println(Theme.panelTop(Theme.I_WAVE, "right now"));
+        System.out.println(Theme.panelRow(""));
+        System.out.println(Theme.panelRow(PAD + Theme.bold(Theme.chalk(String.format("%.0f", r.temp) + " C"))
+                + Theme.stone("  feels like " + String.format("%.0f", r.feelsLike) + " C")
+                + Theme.stone("   " + Theme.I_DOT + "   ") + Theme.leaf(r.condition)));
+        System.out.println(Theme.panelRow(PAD
+                + Theme.stone("humidity ") + Theme.water((int) r.humidity + "%")
+                + Theme.stone("     wind ") + Theme.water(String.format("%.0f km/h", r.windMs * 3.6))
+                + Theme.stone("     cloud ") + Theme.water(r.cloudPct + "%")
+                + (r.rainMm > 0 ? Theme.stone("     rain ") + Theme.water(String.format("%.1f mm/h", r.rainMm)) : "")));
+        System.out.println(Theme.panelRow(""));
+        System.out.println(Theme.panelBottom());
+
+        if (!r.days.isEmpty()) {
+            System.out.println();
+            Theme.Table t = Theme.Table.of(Theme.I_CAL, "next five days")
+                    .col("day",    8, false, Theme::chalk)
+                    .col("sky",    0, false, Theme::stone)
+                    .col("low",    6, true,  Theme::water)
+                    .col("high",   6, true,  Theme::sun)
+                    .col("rain",   6, true,  Theme::water)
+                    .col("chance", 7, true,  Theme::stone);
+            for (WeatherService.Day d : r.days) {
+                t.row(d.name, d.condition,
+                      String.format("%.0f C", d.min), String.format("%.0f C", d.max),
+                      d.rainMm > 0 ? String.format("%.0f mm", d.rainMm) : "-",
+                      d.rainChance > 0 ? String.format("%.0f%%", d.rainChance) : "-");
+            }
+            t.print();
+        }
+
+        weatherAdvice(r);
+    }
+
+    /** Turn the readings into a few field decisions. */
+    private void weatherAdvice(WeatherService.Report r) {
+        List<String> tips = new ArrayList<>();
+        WeatherService.Day today    = r.days.isEmpty()   ? null : r.days.get(0);
+        WeatherService.Day tomorrow = r.days.size() > 1  ? r.days.get(1) : null;
+        double rainSoon = Math.max(today == null ? 0 : today.rainChance,
+                                   tomorrow == null ? 0 : tomorrow.rainChance);
+
+        if (r.rainMm > 0 || rainSoon >= 60)
+            tips.add("rain is likely - hold irrigation and do not spray, it will wash off");
+        else if (rainSoon >= 30)
+            tips.add("some chance of rain - spray early morning so it dries before any shower");
+        else if (r.temp >= 32)
+            tips.add("dry and hot - irrigate in the evening to cut evaporation loss");
+
+        if (r.windMs * 3.6 >= 20)
+            tips.add("wind is strong - pesticide drift will be high, postpone spraying");
+        if (r.humidity >= 80 && r.temp >= 20)
+            tips.add("warm and humid - fungal diseases spread fast, inspect leaves for blight and mildew");
+        if (r.temp >= 38)
+            tips.add("heat stress - give a light mulch and avoid transplanting today");
+        if (r.temp <= 8)
+            tips.add("cold - protect seedlings, frost damage possible at night");
+
+        double weekRain = 0;
+        for (WeatherService.Day d : r.days) weekRain += d.rainMm;
+        if (weekRain >= 40)
+            tips.add(String.format("about %.0f mm expected this week - good time for sowing rainfed crops", weekRain));
+
+        if (!tips.isEmpty()) {
+            System.out.println();
+            System.out.println(PAD + Theme.crop("for your field"));
+            for (String tip : tips)
+                System.out.println(PAD + Theme.leaf(Theme.I_ARROW) + "  " + Theme.chalk(tip));
+        }
+
+        Planner.Plan plan = planner.planFor("temperature " + Math.round(r.temp) + " c");
+        if (!plan.crops.isEmpty()) {
+            StringBuilder names = new StringBuilder();
+            for (int i = 0; i < Math.min(5, plan.crops.size()); i++) {
+                if (names.length() > 0) names.append(", ");
+                names.append(plan.crops.get(i).name);
+            }
+            System.out.println();
+            System.out.println(PAD + Theme.stone("crops that like " + Math.round(r.temp) + " C: ")
+                    + Theme.sun(names.toString()));
+        }
     }
 
     // ====================================================================
@@ -900,5 +1058,16 @@ public class ConsoleChat {
     private static String trim(String s, int max) {
         s = s.replace('\n', ' ');
         return s.length() <= max ? s : s.substring(0, max) + Theme.ELLIPSIS;
+    }
+
+    private void showSuggestions(List<String> list) {
+        if (list == null || list.isEmpty()) return;
+        this.currentSuggestions = new ArrayList<>(list);
+        System.out.println();
+        System.out.println(Theme.section("suggested queries (type number to run)"));
+        System.out.println();
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(PAD + Theme.sun("[" + (i + 1) + "] ") + Theme.chalk(list.get(i)));
+        }
     }
 }

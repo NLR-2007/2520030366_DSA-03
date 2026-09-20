@@ -84,6 +84,8 @@ public class AutocompleteEngine {
         add("how to treat");
         add("suggest fertilizer for");
         add("match fertilizers for");
+        add("supply 3 fields of rice and 2 fields of cotton");
+        add("fewest fertilizers for");
         add("my tomato has yellow leaves");
         add("which crops suit low rainfall");
         add("crops for a hot climate");

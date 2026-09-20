@@ -1,5 +1,6 @@
 package engine;
 
+import algo.ParallelPrimitives;
 import model.Crop;
 import util.Trace;
 
@@ -10,7 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * CROP PLANNER  ->  no new algorithm, it reuses the crop facts
+ * CROP PLANNER  ->  ALGORITHM 13 : PARALLEL MAP + REDUCE
  *
  * Filters the whole crop table by the rainfall, temperature and water need that
  * the farmer mentions, so questions like
@@ -19,7 +20,9 @@ import java.util.regex.Pattern;
  *     "best crops for a hot climate with 800 mm rain"
  *
  * get a real list of crops instead of a generic search. Each crop is scored by
- * how many of the stated conditions it satisfies, and the best matches win.
+ * how many of the stated conditions it satisfies. Every score is independent
+ * of every other, so the scoring is a PARALLEL MAP over the crop table and the
+ * best score is a PARALLEL REDUCE - the work-span numbers land in the trace.
  */
 public class Planner {
 
@@ -55,22 +58,39 @@ public class Planner {
         if (wantCool)       plan.notes.add("cool climate");
         if (wantHot)        plan.notes.add("hot climate");
 
-        List<Scored> scored = new ArrayList<>();
-        for (Crop c : data.crops) {
+        // ---------- ALGORITHM 13 : PARALLEL MAP over the crop table ----------
+        final Integer fRain = rain, fTemp = temp;
+        final String fWater = water;
+        final boolean fLow = wantLowRain, fHigh = wantHighRain, fCool = wantCool, fHot = wantHot;
+        int[] scores = ParallelPrimitives.map(data.crops, c -> {
             int score = 0;
 
-            if (rain != null && rainFits(c.rainfall, rain))                        score += 2;
-            if (temp != null && tempFits(c.temperature, temp))                     score += 2;
-            if (water != null && c.waterNeed.equalsIgnoreCase(water))              score += 2;
-            if (wantLowRain  && rainMax(c.rainfall) <= 700)                        score++;
-            if (wantHighRain && rainMin(c.rainfall) >= 1000)                       score++;
-            if (wantCool     && tempMax(c.temperature) <= 22)                      score++;
-            if (wantHot      && tempMin(c.temperature) >= 24)                      score++;
-            if (wantLowRain  && c.waterNeed.equalsIgnoreCase("Low"))               score++;
-            if (wantHighRain && c.waterNeed.equalsIgnoreCase("High"))              score++;
+            if (fRain != null && rainFits(c.rainfall, fRain))                      score += 2;
+            if (fTemp != null && tempFits(c.temperature, fTemp))                   score += 2;
+            if (fWater != null && c.waterNeed.equalsIgnoreCase(fWater))            score += 2;
+            if (fLow  && rainMax(c.rainfall) <= 700)                               score++;
+            if (fHigh && rainMin(c.rainfall) >= 1000)                              score++;
+            if (fCool && tempMax(c.temperature) <= 22)                             score++;
+            if (fHot  && tempMin(c.temperature) >= 24)                             score++;
+            if (fLow  && c.waterNeed.equalsIgnoreCase("Low"))                      score++;
+            if (fHigh && c.waterNeed.equalsIgnoreCase("High"))                     score++;
+            return score;
+        });
+        int mapWork = ParallelPrimitives.lastWork, mapSpan = ParallelPrimitives.lastSpan;
+        int mapTasks = ParallelPrimitives.lastTasks;
 
-            if (score > 0) scored.add(new Scored(c, score));
+        // ---------- ALGORITHM 13 : PARALLEL REDUCE for the best score ----------
+        int best = ParallelPrimitives.max(scores);
+
+        List<Scored> scored = new ArrayList<>();
+        for (int i = 0; i < scores.length; i++) {
+            if (scores[i] > 0) scored.add(new Scored(data.crops.get(i), scores[i]));
         }
+        Trace.log("Parallel map", "scored " + mapWork + " crops in " + mapTasks
+                + " leaf tasks on " + ParallelPrimitives.threads() + " cores: work "
+                + mapWork + ", span " + mapSpan);
+        Trace.log("Parallel reduce", "best score " + Math.max(best, 0) + " found up a tree of depth "
+                + ParallelPrimitives.lastSpan + " (work " + ParallelPrimitives.lastWork + ")");
 
         // best matches first, then alphabetical
         scored.sort(Comparator.comparingInt((Scored s) -> -s.score)

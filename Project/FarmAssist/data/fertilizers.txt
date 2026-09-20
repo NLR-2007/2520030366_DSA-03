@@ -1,6 +1,7 @@
 # FarmAssist fertilizer database
-# Format: name | N | P | K | costPerBag | suitedCrops (or all) | benefitScore
+# Format: name | N | P | K | costPerBag | suitedCrops (or all) | benefitScore | stock (optional)
 # N P K are percentages. Cost is rupees per standard bag. Benefit is 0 to 100.
+# stock = bags on the shelf for the supply planner (max-flow); 2 when left out.
 urea|46|0|0|300|rice,wheat,maize,sugarcane,banana,sorghum,pearl millet,barley,tobacco|70
 dap|18|46|0|1350|wheat,rice,cotton,mustard,maize,soybean,potato|85
 muriate of potash|0|0|60|850|banana,potato,turmeric,sugarcane,coconut,black pepper,grapes|75

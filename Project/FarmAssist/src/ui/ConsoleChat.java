@@ -36,8 +36,11 @@ import java.util.Set;
  *     |--> 2. Aho-Corasick       : detect crops / diseases / fertilizers / symptoms
  *     |--> 3. Intent routing     : decide which feature answers
  *     |
- *     +--> FERTILIZER_BUDGET     : 6. Knapsack
- *     +--> CROP_FERTILIZER_MATCH : 7. Bipartite Matching
+ *     +--> FERTILIZER_BUDGET     : 6. Knapsack + 12. Greedy Knapsack (1/2-approx)
+ *     +--> CROP_FERTILIZER_MATCH : 7. Bipartite Matching + 9. Bitmask DP
+ *     +--> FIELD_SUPPLY          : 10. Max Flow / Min Cut
+ *     +--> FERTILIZER_COVER      : 11. Greedy Set Cover
+ *     +--> CROP_PLANNER          : 13. Parallel map + reduce
  *     +--> DISEASE_DIAGNOSIS     : 1. KMP  + 8. QuickSort
  *     +--> CROP / FERT INFO      : direct record lookup
  *     +--> GENERAL_SEARCH        : 2. Rabin-Karp + 1. KMP + 8. QuickSort
@@ -229,6 +232,8 @@ public class ConsoleChat {
         switch (intent) {
             case FERTILIZER_BUDGET:     answerBudget(query, entities);      break;
             case CROP_FERTILIZER_MATCH: answerMatching(entities);           break;
+            case FIELD_SUPPLY:          answerSupply(query, entities);      break;
+            case FERTILIZER_COVER:      answerCover(entities);              break;
             case CROP_COMPARE:          answerCompare(entities);            break;
             case CROP_PLANNER:          answerPlanner(query, entities);     break;
             case DISEASE_DIAGNOSIS:     answerDiagnosis(query, entities);   break;
@@ -283,6 +288,20 @@ public class ConsoleChat {
         System.out.println(PAD + Theme.ash(Theme.I_DOT + "  ") + Theme.stone(Theme.wrap(
                 "chosen by 0/1 Knapsack, the highest total benefit that fits the budget",
                 Theme.WIDTH - PAD.length() - 4, PAD + "   ")));
+
+        // the NP-hard angle: what the greedy 1/2-approximation would have bought
+        StringBuilder g = new StringBuilder();
+        for (Fertilizer f : plan.greedyChosen) {
+            if (g.length() > 0) g.append(", ");
+            g.append(f.name);
+        }
+        String verdict = plan.greedyBenefit == plan.totalBenefit ? "matches the exact answer"
+                : "benefit " + plan.greedyBenefit + " vs " + plan.totalBenefit + " exact, within the proven 1/2 bound";
+        System.out.println(PAD + Theme.ash(Theme.I_DOT + "  ") + Theme.stone(Theme.wrap(
+                "greedy 1/2-approximation (value per rupee) picks " + g + " for Rs "
+                + plan.greedyCost + " - " + verdict + ". Knapsack is NP-hard; the DP is "
+                + "pseudo-polynomial in the budget, the greedy is O(n log n).",
+                Theme.WIDTH - PAD.length() - 4, PAD + "   ")));
     }
 
     private int cheapest(List<Fertilizer> list) {
@@ -303,24 +322,146 @@ public class ConsoleChat {
         Theme.Table t = Theme.Table.of(Theme.I_LINK, "field by field plan")
                 .col("crop",       20, false, Theme::chalk)
                 .col("fertilizer",  0, false, Theme::crop)
-                .col("npk",        10, false, Theme::stone);
+                .col("npk",        10, false, Theme::stone)
+                .col("benefit",     9, true,  Theme::leaf);
 
         for (int i = 0; i < plan.crops.size(); i++) {
             int f = plan.assignment[i];
             if (f >= 0) {
                 Fertilizer fert = plan.pool.get(f);
                 t.row(Theme.title(plan.crops.get(i)), Theme.title(fert.name),
-                      fert.n + "-" + fert.p + "-" + fert.k);
+                      fert.n + "-" + fert.p + "-" + fert.k, fert.benefit + "/100");
             } else {
-                t.row(Theme.title(plan.crops.get(i)), "no free suitable bag", "");
+                t.row(Theme.title(plan.crops.get(i)), "no free suitable bag", "", "");
             }
         }
+        if (plan.optimised) t.total("TOTAL", "", "", String.valueOf(plan.totalBenefit));
         t.print();
 
         System.out.println();
         System.out.println(PAD + Theme.leaf(Theme.I_OK) + "  "
                 + Theme.chalk("served " + plan.matchedCount + " of " + plan.crops.size() + " fields")
                 + Theme.stone("   " + Theme.I_DOT + "  maximum bipartite matching"));
+        if (plan.optimised) {
+            System.out.println(PAD + Theme.ash(Theme.I_DOT + "  ") + Theme.stone(Theme.wrap(
+                    "bags chosen by bitmask DP over the 2^" + plan.crops.size()
+                    + " subsets of fields: the highest total benefit among all maximum matchings",
+                    Theme.WIDTH - PAD.length() - 4, PAD + "   ")));
+        }
+        System.out.println(PAD + Theme.stone("several fields of a crop?  try ")
+                + Theme.sun("\"supply 3 fields of rice and 2 fields of cotton\""));
+    }
+
+    // ------------- FEATURE : many fields  ->  MAX FLOW / MIN CUT ----------
+
+    private void answerSupply(String query, EntityExtractor.Entities e) {
+        List<String> crops = new ArrayList<>();
+        List<Integer> fields = new ArrayList<>();
+        for (String[] pair : IntentDetector.fieldCounts(query, e.crops)) {
+            crops.add(pair[0]);
+            fields.add(Integer.parseInt(pair[1]));
+        }
+        Recommender.SupplyPlan plan = recommender.supplyFields(crops, fields);
+
+        say("Bags from the shelf to your " + Theme.sun(plan.totalFields + " fields")
+            + ", one bag per field:");
+        System.out.println();
+
+        Theme.Table t = Theme.Table.of(Theme.I_LINK, "supply plan")
+                .col("crop",        0, false, Theme::chalk)
+                .col("fields",     10, true,  Theme::stone)
+                .col("served",     10, true,  Theme::leaf)
+                .col("short",      10, true,  Theme::alert);
+        for (int i = 0; i < plan.crops.size(); i++) {
+            int missing = plan.fields.get(i) - plan.supplied[i];
+            t.row(Theme.title(plan.crops.get(i)), String.valueOf(plan.fields.get(i)),
+                  String.valueOf(plan.supplied[i]), missing == 0 ? "-" : String.valueOf(missing));
+        }
+        t.total("TOTAL", String.valueOf(plan.totalFields), String.valueOf(plan.totalSupplied),
+                plan.totalFields == plan.totalSupplied ? "-"
+                        : String.valueOf(plan.totalFields - plan.totalSupplied));
+        t.print();
+
+        // which bags go where, one wrapped line per crop
+        System.out.println();
+        for (int i = 0; i < plan.crops.size(); i++) {
+            StringBuilder sent = new StringBuilder();
+            for (int j = 0; j < plan.pool.size(); j++) {
+                if (plan.bags[i][j] == 0) continue;
+                if (sent.length() > 0) sent.append(", ");
+                sent.append(plan.bags[i][j]).append(" ").append(plan.pool.get(j).name);
+            }
+            String indent = PAD + " ".repeat(LABEL_W + 2);
+            System.out.println(PAD + Theme.stone(Theme.padRight(plan.crops.get(i), LABEL_W)) + "  "
+                    + Theme.crop(Theme.wrap(sent.length() == 0 ? "nothing suitable in stock"
+                            : sent.toString(), Theme.WIDTH - indent.length() - 1, indent)));
+        }
+
+        System.out.println();
+        if (plan.totalSupplied == plan.totalFields) {
+            System.out.println(PAD + Theme.leaf(Theme.I_OK) + "  "
+                    + Theme.chalk("every field gets a bag")
+                    + Theme.stone("   " + Theme.I_DOT + "  maximum flow = " + plan.totalSupplied));
+        } else {
+            System.out.println(PAD + Theme.alert(Theme.I_WARN) + "  "
+                    + Theme.chalk((plan.totalFields - plan.totalSupplied) + " field(s) go without")
+                    + Theme.stone("   " + Theme.I_DOT + "  maximum flow = " + plan.totalSupplied));
+            System.out.println(PAD + Theme.ash(Theme.I_DOT + "  ") + Theme.stone(Theme.wrap(
+                    "min cut: " + String.join(", ", plan.shortCrops) + " sit on the source side; "
+                    + "the " + plan.soldOut.size() + " shelves they can reach ("
+                    + shortList(plan.soldOut, 6) + ") hold exactly " + plan.totalSupplied
+                    + " bag(s) between them - "
+                    + "that is the bottleneck, and no assignment can beat it",
+                    Theme.WIDTH - PAD.length() - 4, PAD + "   ")));
+        }
+        System.out.println(PAD + Theme.ash(Theme.I_DOT + "  ") + Theme.stone(Theme.wrap(
+                "source -> crop (fields) -> fertilizer -> sink (bags in stock), "
+                + "solved by Edmonds-Karp; each shop stocks " + Fertilizer.DEFAULT_STOCK
+                + " bags unless data/fertilizers.txt says otherwise",
+                Theme.WIDTH - PAD.length() - 4, PAD + "   ")));
+    }
+
+    /** "a, b, c and 5 more" once a list gets long. */
+    private static String shortList(List<String> items, int max) {
+        if (items.size() <= max) return String.join(", ", items);
+        return String.join(", ", items.subList(0, max)) + " and " + (items.size() - max) + " more";
+    }
+
+    // ------------- FEATURE : one list for the farm  ->  GREEDY SET COVER --
+
+    private void answerCover(EntityExtractor.Entities e) {
+        List<String> crops = new ArrayList<>(e.crops);
+        Recommender.CoverPlan plan = recommender.coverCrops(crops);
+
+        say("The fewest products that between them suit "
+            + Theme.sun(String.join(", ", crops)) + ":");
+        System.out.println();
+
+        Theme.Table t = Theme.Table.of(Theme.I_FERT, "one shopping list")
+                .col("#",           3, true,  Theme::stone)
+                .col("fertilizer", 22, false, Theme::crop)
+                .col("newly covers", 0, false, Theme::chalk);
+        for (int i = 0; i < plan.chosen.size(); i++) {
+            t.row(String.valueOf(i + 1), Theme.title(plan.chosen.get(i).name),
+                  String.join(", ", plan.coversCrops.get(i)));
+        }
+        t.print();
+
+        System.out.println();
+        if (plan.uncovered.isEmpty()) {
+            System.out.println(PAD + Theme.leaf(Theme.I_OK) + "  "
+                    + Theme.chalk(plan.chosen.size() + " product(s) cover all "
+                            + crops.size() + " crops"));
+        } else {
+            System.out.println(PAD + Theme.alert(Theme.I_WARN) + "  "
+                    + Theme.chalk("no crop-specific product suits: " + String.join(", ", plan.uncovered)));
+        }
+        System.out.println(PAD + Theme.ash(Theme.I_DOT + "  ") + Theme.stone(Theme.wrap(
+                "set cover is NP-hard (vertex cover reduces to it), so this is the greedy "
+                + "approximation: always take the product that covers the most crops still "
+                + "uncovered. It uses at most H(" + crops.size() + ") = "
+                + String.format("%.2f", plan.bound) + " times the optimum number of products.",
+                Theme.WIDTH - PAD.length() - 4, PAD + "   ")));
     }
 
     // ----------------- FEATURE : diagnosis  ->  KMP ----------------------
@@ -874,6 +1015,8 @@ public class ConsoleChat {
         System.out.println();
         example(Theme.I_FERT, "suggest fertilizer for tomato under 3000", "best basket in budget");
         example(Theme.I_LINK, "match fertilizers for rice cotton banana", "one bag per crop");
+        example(Theme.I_LINK, "supply 3 fields of rice and 2 of cotton",  "many fields, limited stock");
+        example(Theme.I_FERT, "fewest fertilizers for rice wheat cotton",  "one list for the farm");
         example(Theme.I_FERT, "what is dap",                             "fertilizer profile");
 
         System.out.println();
@@ -882,7 +1025,7 @@ public class ConsoleChat {
         command("list crops | list fertilizers", "everything in the data files");
         command("list diseases | list pests | list articles", "");
         command("trace on | trace off",          "show the algorithm trace");
-        command("algo demo",                     "run all 8 algorithms on tiny inputs");
+        command("algo demo",                     "run all 13 algorithms on tiny inputs");
         command("clear | help | exit",           "");
     }
 

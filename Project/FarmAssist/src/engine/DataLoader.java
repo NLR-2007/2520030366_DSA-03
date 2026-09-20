@@ -84,6 +84,8 @@ public class DataLoader {
             x.cost = toInt(f[4]);
             x.suited = splitList(f[5]);
             x.benefit = toInt(f[6]);
+            // optional 8th column: bags in stock at the shop (for the supply planner)
+            x.stock = f.length > 7 && !f[7].trim().isEmpty() ? toInt(f[7]) : Fertilizer.DEFAULT_STOCK;
             fertilizers.add(x);
         }
     }
@@ -194,6 +196,8 @@ public class DataLoader {
             "recommend", "which", "what", "when", "where", "how", "grow", "growing",
             "cultivation", "season", "soil", "water", "irrigation", "spray", "control",
             "crop", "crops", "leaf", "leaves", "plant", "plants", "field", "yield",
+            "fields", "fertilizers", "fertilisers", "acre", "acres", "plot", "plots",
+            "supply", "stock", "bags", "fewest", "cover", "covers", "minimum",
             "manure", "compost", "organic", "nitrogen", "phosphorus", "potassium",
             "about", "info", "information", "care", "give", "need", "help", "problem",
             "attack", "infected", "damage", "related", "article", "articles", "match",

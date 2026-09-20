@@ -6,7 +6,7 @@
 
 ![Java](https://img.shields.io/badge/Java-21-orange?logo=openjdk&logoColor=white)
 ![Platform](https://img.shields.io/badge/platform-Windows%20Terminal-blue)
-![Algorithms](https://img.shields.io/badge/core%20algorithms-8-green)
+![Algorithms](https://img.shields.io/badge/core%20algorithms-13-green)
 ![Course](https://img.shields.io/badge/DSA--3-25CS2103E-lightgrey)
 
 *Course project · DSA-3 (25CS2103E) · Team 20 · KL University*
@@ -21,10 +21,10 @@ Kisaan Krushi AI is a console chat assistant that answers a farmer's questions a
 crops, diseases, pests and fertilizers, plans crops for a climate, builds a fertilizer
 basket within a budget, and reports live weather with field advice.
 
-There is no machine-learning model behind it. **Every answer is produced by eight classic
-string, graph and dynamic-programming algorithms** implemented from scratch and run over a
-local agriculture knowledge base. The project's goal is to show those algorithms doing
-real, visible work end-to-end.
+There is no machine-learning model behind it. **Every answer is produced by thirteen classic
+string, graph, dynamic-programming, network-flow, approximation and parallel algorithms**
+implemented from scratch and run over a local agriculture knowledge base. The project's
+goal is to show those algorithms doing real, visible work end-to-end.
 
 ```
  you  › my tomatoe has yelow leaves and brown spots
@@ -42,9 +42,11 @@ real, visible work end-to-end.
 | **Search** | Ranked answers with snippets and related reading for any farming question | Rabin–Karp, KMP, QuickSort, Suffix Array + LCP |
 | **Diagnosis** | "my tomato has yellow leaves" → likely diseases, ranked, with treatment | Aho–Corasick, KMP, QuickSort |
 | **Spelling & language** | Fixes typos, splits joined words, maps local names (`paddy`, `bhindi`, `dhan`) | Edit Distance, word-segmentation DP, Aho–Corasick |
-| **Fertilizer basket** | Best set of fertilizers for a crop under a rupee budget | 0/1 Knapsack |
-| **Field allocation** | One distinct fertilizer per crop across several fields | Bipartite Matching (Kuhn) |
-| **Crop planner** | Crops suited to a rainfall, temperature or water profile | Record scoring + QuickSort |
+| **Fertilizer basket** | Best set of fertilizers for a crop under a rupee budget, with the greedy ½-approximation shown beside the exact answer | 0/1 Knapsack, Greedy Knapsack |
+| **Field allocation** | One distinct fertilizer per crop, and the richest such assignment | Bipartite Matching (Kuhn), Bitmask DP |
+| **Field supply** | Several fields of each crop against the shop's stock; names the bottleneck when bags run out | Max Flow (Edmonds–Karp), Min Cut |
+| **Farm shopping list** | Fewest products that between them suit every crop on the farm | Greedy Set Cover (NP-hard) |
+| **Crop planner** | Crops suited to a rainfall, temperature or water profile | Parallel map + reduce, QuickSort |
 | **Live search box** | Suggestions drop down under the prompt as you type, like a video site's search bar | Trie |
 | **Live weather** | Current reading, five-day outlook and farming advice for any town | OpenWeatherMap API |
 | **Algorithm trace** | Optional gutter showing which algorithm ran and what it found | — |
@@ -97,7 +99,9 @@ A drop-down of completions appears as you type: **↑/↓** pick, **Tab** fills,
 | `how to control whitefly` | Pest profile with damage and control |
 | `which crops suit low rainfall` | Crop planner |
 | `suggest fertilizer for tomato under 3000` | Best basket within budget (Knapsack) |
-| `match fertilizers for rice cotton banana` | One bag per crop (Bipartite Matching) |
+| `match fertilizers for rice cotton banana` | One bag per crop (Bipartite Matching + Bitmask DP) |
+| `supply 3 fields of rice and 2 fields of cotton` | Many fields, limited stock (Max Flow / Min Cut) |
+| `fewest fertilizers for rice wheat cotton banana` | One list for the whole farm (Greedy Set Cover) |
 | `what is dap` | Fertilizer profile |
 | `weather in guntur` · `will it rain tomorrow` | Live weather, outlook and field advice |
 
@@ -107,7 +111,7 @@ A drop-down of completions appears as you type: **↑/↓** pick, **Tab** fills,
 |---------|------|
 | `help` | Examples and commands |
 | `list crops` · `list diseases` · `list pests` · `list fertilizers` · `list articles` | Browse the knowledge base |
-| `algo demo` | Run all eight algorithms on tiny, hand-checkable inputs |
+| `algo demo` | Run all thirteen algorithms on tiny, hand-checkable inputs |
 | `trace on` / `trace off` | Show or hide the algorithm trace in the gutter |
 | `city guntur` | Set the default town for weather questions |
 | `color on` / `color basic` / `color off` · `ascii on` / `ascii off` · `width 120` · `center off` | Terminal appearance |
@@ -117,6 +121,7 @@ A drop-down of completions appears as you type: **↑/↓** pick, **Tab** fills,
 
 `algo demo` → `hi` → `paddy` → `my tomatoe has yelow leaves and brown spots` →
 `suggest fertilizer for tomato under 3000 rupees` → `match fertilizers for rice cotton banana groundnut` →
+`supply 40 fields of rice and 12 fields of cotton` → `fewest fertilizers for rice wheat cotton banana` →
 `how to grow rice` → `compare rice and wheat` → `which crops suit low rainfall` → `weather in guntur`
 
 ---
@@ -137,18 +142,19 @@ A drop-down of completions appears as you type: **↑/↓** pick, **Tab** fills,
               │
    3. Intent routing
               │
-   ┌──────────┼──────────────────┬─────────────────────┐
-budget?   several crops?      symptoms?           anything else
-   │          │                  │                     │
-6. Knapsack  7. Bipartite     1. KMP over          2. Rabin–Karp   score documents
-             Matching         symptom lists        1. KMP          locate + snippet
-                              8. QuickSort         8. QuickSort    rank
-                                                   5. Suffix Array + LCP  related articles
+   ┌──────────┼──────────────┬──────────────┬──────────────┬─────────────┬────────────────┐
+budget?   several crops?  N fields of   fewest for     climate?    symptoms?     anything else
+   │          │           each crop?    all crops?        │            │              │
+6. Knapsack  7. Bipartite  10. Max Flow  11. Greedy    13. Parallel  1. KMP over   2. Rabin–Karp
+12. Greedy      Matching       + Min Cut     Set Cover     map+reduce  symptom lists 1. KMP
+    ½-approx 9. Bitmask DP                                8. QuickSort 8. QuickSort  8. QuickSort
+13. Parallel                                                                        5. Suffix Array
+    prefix                                                                             + LCP
 ```
 
 ---
 
-## The eight algorithms
+## The thirteen algorithms
 
 All live in `src/algo/`, are pure (no project logic inside), and are used for real work —
 no `String.contains()`, no `Collections.sort()`.
@@ -162,11 +168,30 @@ no `String.contains()`, no `Collections.sort()`.
 | 5 | **Suffix Array + LCP** | `SuffixArrayLCP.java` | Related articles by longest common substring | O(n log² n) build, O(n) LCP | O(n) |
 | 6 | **0/1 Knapsack** | `Knapsack.java` | Fertilizer basket within budget (weight = price, value = benefit) | O(items × budget) | O(items × budget) |
 | 7 | **Bipartite Matching** | `BipartiteMatching.java` | One distinct fertilizer per crop (Kuhn's augmenting paths) | O(V · E) | O(V + E) |
-| 8 | **Randomized QuickSort** | `RandomizedQuickSort.java` | Ranking results, diseases, related articles | O(n log n) expected | O(log n) |
+| 8 | **Randomized QuickSort** | `RandomizedQuickSort.java` | Ranking results, diseases, related articles (Las Vegas: always right, time is random) | O(n log n) expected | O(log n) |
+| 9 | **Bitmask DP** (DP on subsets) | `BitmaskAssignment.java` | Richest one-bag-per-crop assignment, `dp[fertilizer][subset of crops]` | O(F · 2ᶜ · C) | O(F · 2ᶜ) |
+| 10 | **Max Flow + Min Cut** (Ford–Fulkerson / Edmonds–Karp) | `MaxFlow.java` | Fields → crops → fertilizers → stock; the min cut names the bottleneck | O(V · E²) | O(V + E) |
+| 11 | **Greedy Set Cover** | `SetCoverGreedy.java` | Fewest products suiting every crop; NP-hard, greedy is within H(n) ≈ ln n of optimal | O(S · U · answer) | O(U) |
+| 12 | **Greedy Knapsack** (½-approximation) | `KnapsackGreedy.java` | Value-per-rupee greedy vs the single best item; NP-hard, proven ≥ ½ OPT | O(n log n) | O(n) |
+| 13 | **Parallel primitives** (map, reduce, prefix sum) | `ParallelPrimitives.java` | Fork/join scoring of the crop table and running costs in the greedy; work O(n), span O(log n) | O(n) work, O(log n) span | O(n) |
 
 Two supporting structures sit beside them: a **Trie** (`Trie.java`) drives the live
 search-box completions in O(L) per keystroke, and a word-segmentation DP
 (`engine/CompoundSplitter.java`) repairs missing spaces, which Edit Distance cannot do.
+
+### Course outcomes covered
+
+| CO | Topic | Where it shows up |
+|----|-------|-------------------|
+| 1 | Problem-class signatures → strategy | Intent routing picks a different algorithm family per question |
+| 2 | Linear-time string algorithms and suffix structures | KMP, Rabin–Karp, Aho–Corasick, Suffix Array + LCP, Trie |
+| 3 | Advanced DP patterns (DP on subsets) | Bitmask DP for the assignment; Knapsack, Edit Distance and word-segmentation DP |
+| 4 | Network flow and max-flow / min-cut duality | Edmonds–Karp field supply with the min cut printed as the bottleneck; Kuhn's matching |
+| 5 | NP-completeness and approximation | Set Cover (Vertex Cover ⇒ Set Cover) with the H(n) greedy; Knapsack (Subset Sum ⇒ Knapsack) with the ½-approximation next to the pseudo-polynomial DP |
+| 6 | Randomised and parallel algorithms | Randomized QuickSort (Las Vegas), Rabin–Karp hashing (Monte Carlo without its check); fork/join parallel map, reduce and prefix sum with work–span figures in the trace |
+
+`trace on` prints the algorithm behind every step, including the DP table size, the number
+of augmenting paths, the approximation bound and the work/span of the parallel passes.
 
 ---
 
@@ -199,7 +224,7 @@ Plain text, `|`-separated, `#` for comments. Add a row and it is live on the nex
 | `crops.txt` | 63 | Season, soil, water need, N-P-K, diseases, duration, temperature, rainfall, spacing, varieties, yield |
 | `diseases.txt` | 64 | Symptoms and treatment |
 | `pests.txt` | 44 | Damage and control |
-| `fertilizers.txt` | 38 | NPK, price, benefit |
+| `fertilizers.txt` | 38 | NPK, price, benefit, optional bags in stock (default 2) |
 | `articles.txt` | 62 | Searchable field notes |
 | `symptoms.txt` | 74 | Symptom keywords for Aho–Corasick |
 | `synonyms.txt` | 396 | Local / alternate names → canonical word |
@@ -220,7 +245,7 @@ FarmAssist/
 ├── lib/jline-3.27.1.jar    raw keyboard input for the live search box
 ├── data/                   the knowledge base (see above)
 └── src/
-    ├── algo/               the eight algorithms + Trie — pure, reusable
+    ├── algo/               the thirteen algorithms + Trie — pure, reusable
     ├── model/              Crop, Disease, Fertilizer, Pest, Article
     ├── engine/             SpellCorrector · SynonymMapper · EntityExtractor
     │                       IntentDetector · SearchEngine · Diagnoser · Planner

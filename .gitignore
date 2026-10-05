@@ -1,5 +1,28 @@
+# Build & Compiled Output
 *.class
-.DS_Store
 out/
 bin/
+
+# Temporary & Working Files
+.DS_Store
+Thumbs.db
+~$*
+*.tmp
+~WRL*.tmp
+
+# Course handouts, presentation slides, and Word documents
+*.pdf
+*.docx
+*.pptx
+*.doc
+*.ppt
+
+# Internal Cache & Tool Folders
+.hit/
+.backup/
+.vscode/
+.idea/
+
+# Environment / Keys
 **/data/weather.txt
+

@@ -47,7 +47,8 @@ public class IntentDetector {
 
         // 0. several fields of each crop against the shop's stock  ->  Max Flow
         if (!e.crops.isEmpty() && !hasMoney
-                && hasAny(q, "field", "acre", "plot", "supply", "stock", "bags", "hectare")
+                && (hasAny(q, "field", "acre", "plot", "supply", "stock", "bags", "hectare")
+                    || q.matches(".*\\bf(ie|ei|i|e)l?e?d?s?\\b.*"))   // "fileds", "feilds", "filds"
                 && !fieldCounts(q, e.crops).isEmpty()) {
             return Intent.FIELD_SUPPLY;
         }
@@ -126,28 +127,40 @@ public class IntentDetector {
         return false;
     }
 
+    /** Largest field count we accept; anything bigger is a typo, not a farm. */
+    public static final int MAX_FIELDS = 100_000;
+
     /**
      * "3 fields of rice and 2 acres of cotton"  ->  [rice=3, cotton=2].
      * A crop named without a number in front of it counts as one field.
+     * The unit word between the number and the crop may be anything
+     * ("fields", "acres", a typo like "fileds") or missing ("2 of cotton").
      */
     public static List<String[]> fieldCounts(String query, java.util.Set<String> crops) {
         List<String[]> out = new ArrayList<>();
         String q = query.toLowerCase();
         boolean anyNumber = false;
         for (String crop : crops) {
-            Matcher m = Pattern.compile("(\\d+)\\s*(?:fields?|acres?|plots?|hectares?|bags?)?\\s*(?:of\\s+)?"
+            // "3 fields of rice" / "3 fileds rice" / "3 of rice" / "3 rice"
+            Matcher m = Pattern.compile("(\\d+)\\s*(?:[a-z]+\\s+)?(?:of\\s+)?"
                     + Pattern.quote(crop) + "\\b").matcher(q);
             int n = 1;
-            if (m.find()) { n = Integer.parseInt(m.group(1)); anyNumber = true; }
+            if (m.find()) { n = clampFields(m.group(1)); anyNumber = true; }
             else {
                 // "rice 3 fields" / "rice x3"
                 Matcher m2 = Pattern.compile("\\b" + Pattern.quote(crop)
-                        + "\\s*(?:x|\\*)?\\s*(\\d+)\\s*(?:fields?|acres?|plots?|hectares?)?").matcher(q);
-                if (m2.find()) { n = Integer.parseInt(m2.group(1)); anyNumber = true; }
+                        + "\\s*(?:x|\\*)?\\s*(\\d+)\\s*(?:[a-z]+)?").matcher(q);
+                if (m2.find()) { n = clampFields(m2.group(1)); anyNumber = true; }
             }
             if (n > 0) out.add(new String[]{crop, String.valueOf(n)});
         }
         return anyNumber ? out : new ArrayList<>();
+    }
+
+    /** Parse a digit string without overflowing; huge values are capped. */
+    private static int clampFields(String digits) {
+        try { return Math.min(Integer.parseInt(digits), MAX_FIELDS); }
+        catch (NumberFormatException tooBig) { return MAX_FIELDS; }
     }
 
     /** Pull the budget number out of a sentence like "under 3000 rupees". */
